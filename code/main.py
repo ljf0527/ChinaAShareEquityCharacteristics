@@ -30,7 +30,7 @@ class AShareMarket:
             self.ST_PT['Trdmnt'] = list(self.ST_PT['Trddt'])
             self.ST_PT.Trdmnt = self.ST_PT.Trdmnt.apply(lambda x: x[0:4] + x[5:7])
             self.ST_PT.drop_duplicates(subset=['Trdmnt', 'Stkcd'], keep='last', inplace=True)
-            self.ST_PT = self.ST_PT[['Stkcd', 'Trdmnt', 'Trdsta']]
+            self.ST_PT = self.ST_PT[['Stkcd', 'Trdmnt', 'Trdsta']] 
             self.monthly_ret = self.get_data('TRD_Mnth', 'Mretwd')
 
         else:
@@ -62,11 +62,7 @@ class AShareMarket:
 
             if table == 'TRD_Dalyr':
                 raw_data.Trddt = raw_data.Trddt.apply(lambda x: x[0:4] + x[5:7] + x[8:10])
-                raw_data.drop(index=raw_data[(raw_data.Markettype == 2) | (raw_data.Markettype == 8)].index,
-                              inplace=True)
-                raw_data.drop(index=raw_data[
-                    (raw_data.Trdsta != 1) & (raw_data.Trdsta != 4) & (raw_data.Trdsta != 7) & (
-                                raw_data.Trdsta != 10) & (raw_data.Trdsta != 13)].index, inplace=True)
+                raw_data = self.drop_ST_PT(raw_data)
                 data = raw_data.pivot(index='Trddt', columns='Stkcd', values=field)
 
             if table == 'TRD_Cndalym':

@@ -13,6 +13,7 @@ cs_ew = read_pickle_file('../data/share/cs_ew.pkl')
 
 # # Print Returns
 
+# # VW
 uni_ret = pd.DataFrame()
 for c in cs_vw.char_list:
     expr = "tmp=cs_vw.port_%s.uni_ret.copy()"%(c)
